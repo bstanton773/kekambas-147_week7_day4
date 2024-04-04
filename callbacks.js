@@ -212,3 +212,88 @@ function playTaylor(songName){
 }
 
 
+// res = fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+// res.then(r => r.json()).then( data => console.log(data) )
+
+// fetch('https://pokeapi.co/api/v2/pokemon/pikachu')
+//     .then( res => res.json() )
+//     .then( data => {
+//         console.log(data.name);
+//         console.log(data.height);
+//         let h1 = document.createElement('h1');
+//         h1.innerHTML = data.name
+//         document.body.append(h1);
+//     } )
+//     .catch( err => console.warn(err) );
+
+
+
+// Async/Await
+
+/*
+Async Await is another way to resolve your promises, that is a bit more clear than the .then.catch chain
+
+To do this we use the key word await in front of the promise call.
+
+Any function that is awaiting something must be labeled as async.
+
+You can not await something at the top level of your code
+*/
+
+function playTaylor(songName){
+    downloadSong(songName)
+        .then( song => {
+            console.log(`${song.title} by ${song.artist} is now playing...`)
+            return song.artist
+        } )
+        .then( artist => console.log("Oh my gosh", artist, "I love you!") )
+        .catch( err => console.warn(err) )
+        .finally( () => console.log('Thank you for searching our database') )
+}
+
+async function playTaylor2(songName){
+    let song = await downloadSong(songName);
+    console.log(`${song.title} by ${song.artist} is now playing...`)
+    let artist = song.artist
+    console.log("Oh my gosh", artist, "I love you!")
+    console.log('Thank you for searching our database')
+}
+
+// playTaylor2('Cruel Summer');
+// playTaylor2('Bad Blood');
+
+
+// Error Handling
+
+// playTaylor2('123');
+
+// try/catch
+
+async function playTaylor3(songName){
+    try{
+        let song = await downloadSong(songName);
+        console.log(`${song.title} by ${song.artist} is now playing...`)
+        let artist = song.artist
+        console.log("Oh my gosh", artist, "I love you!")
+    } catch(err) {
+        console.warn(err);
+    }
+    console.log('Thank you for searching our database')
+}
+playTaylor3('Cruel Summer');
+playTaylor3('Bad Blood');
+playTaylor3('123');
+
+
+// Make an async/await function to return poke data
+
+async function getPokeData(pokeName){
+    try{
+        const pokeURL = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
+        let response = await fetch(pokeURL);
+        let data = await response.json();
+        return data
+    } catch(err) {
+        console.warn(err)
+    }
+};
