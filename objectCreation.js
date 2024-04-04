@@ -181,3 +181,148 @@ String.prototype.toTitleCase = function(){
 const sentence = "toDay is ThuRSdaY ApRiL 4tH anD wE ArE LearNinG JavAScriPT";
 console.log(sentence.toTitleCase());
 
+
+// ES6 - class/OOP
+
+/*
+In python we define a constructor like:
+
+    def __init__(self, params):
+        self.param=param
+In JS it would look like:
+
+    constructor(params){
+        this.params=params
+    }
+Like python, Class names are written in PascalCase.
+
+The keyword new is required when initializing an instance as it is what runs the constructor function.
+
+Note: Methods need no function keyword.
+*/
+
+class Person{
+    constructor(name, age){
+        this.name = name;
+        this.age = age;
+    }
+
+    jump(){
+        console.log(this.name + ' has jumped')
+    }
+
+    squat(){
+        console.log(this.name + ' has squatted')
+    }
+}
+
+let taylor = new Person('Taylor', 22);
+console.log(taylor);
+
+let liam = new Person('Liam', 34);
+console.log(liam);
+
+taylor.jump();
+liam.squat();
+
+console.log(taylor.jump === liam.jump);
+
+// Inheritance
+
+/*
+In python, to inherit (or extend) a class, we did something like class Baby(Human). In JS, we use the keyword extends ie class Baby extends Human.
+
+A Parent Class is often also called a super class.
+
+In a child class the keyword super represents the parent class.
+
+Often it is use to invoke the parent constructor. just like in python when we did:
+
+    super().__init__(params)
+
+in JS this becomes:
+
+    super(params)
+
+*/
+
+class Baby extends Person {
+    constructor(name, age, isWalking){
+        super(name, age);
+        this.isWalking = isWalking;
+    }
+
+    walk(){
+        if (this.isWalking){
+            console.log(this.name + ' is walking')
+        } else {
+            console.log(this.name + ' is crawling')
+        }
+    }
+}
+
+
+let maggie = new Baby('Maggie', 1, false);
+console.log(maggie);
+
+maggie.walk();
+maggie.jump();
+maggie.squat();
+
+
+// Inheritance flows down. Person instances will not have the .walk method
+console.log(liam);
+// liam.walk();
+
+
+// Using the super outside of the constructor
+
+// super.methodName()
+
+
+class Animal{
+    constructor(name){
+        this.name = name
+    }
+
+    speak(){
+        console.log(`${this.name} makes a noise`)
+    }
+}
+
+// Child Class extending the Parent Animal class
+class Dog extends Animal{
+    constructor(name, breed){
+        super(name); // Call the constructor of the parent class Animal
+        this.breed = breed
+    };
+
+    // Method using super to call a method from parent class
+    speak(){
+        super.speak();
+        console.log(`I am a ${this.breed} named ${this.name}`)
+    }
+}
+
+
+let spot = new Dog('Spot', 'Labrador');
+spot.speak();
+
+
+class Cat extends Animal{
+    constructor(name, color){
+        super(name);
+        this.color = color
+    }
+
+    speak(){
+        super.speak();
+        console.log(`I am a ${this.color} cat named ${this.name}`)
+    }
+}
+
+let whiskers = new Cat('Whiskers', 'orange');
+
+whiskers.speak();
+
+
